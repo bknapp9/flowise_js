@@ -34,7 +34,7 @@ app.post('/get-available-typologies', async (req, res) => {
 	const { building } = req.body;
 	try {
 		const connection = await mysql.createConnection(dbConfig);
-		const [rows] = await connection.execute('SELECT typology FROM departamentos WHERE building = ?', [building]);
+		const [rows] = await connection.execute('SELECT typology FROM departamentos WHERE building = ? GROUP BY typology', [building]);
 		await connection.end();
 		res.json({ success: true, typologies: rows });
 	} catch (error) {
